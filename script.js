@@ -90,7 +90,7 @@
 
         if (!isPresent && data.Title != undefined) {
             if (data.Poster == "N/A") {
-                data.Poster = "./not_found";
+                data.Poster = "./not_found.png";
             }
             suggestionList.push(data);
             const movieCard = document.createElement("div");
@@ -100,7 +100,8 @@
         <div class="card my-2" data-id = " ${data.Title} ">
         <a href="movie.html" >
           <img
-            src="${data.Poster} "
+            src="${data.Poster}"
+
             class="card-img-top"
             alt="..."
             data-id = "${data.Title} "
@@ -147,6 +148,7 @@
                 notify("already added to fav list");
                 isPresent = true;
             }
+
         });
 
         if (!isPresent) {
@@ -176,7 +178,7 @@
                 div.innerHTML = `
    
     <img
-      src="${movie.Poster}"
+      src="${movie.Poster == "N/A" ? "./not_found.png" : movie.Poster}"
       alt=""
       class="fav-movie-poster"
     />
@@ -199,7 +201,7 @@
 
     // To notify
     function notify(text) {
-        window.alert(text);
+
     }
 
     // Delete from favourite list
