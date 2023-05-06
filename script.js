@@ -6,12 +6,24 @@
     const emptyText = document.getElementById("empty-search-text");
     const showFavourites = document.getElementById("favorites-section");
     const emptyFavText = document.getElementById("empty-fav-text");
+    const loader = document.getElementById("loader-main");
 
     addToFavDOM();
     showEmptyText();
     let suggestionList = [];
     let favMovieArray = [];
 
+    //showing loader when the data is being fetched
+    function showLoading(loading) {
+        console.log(loading);
+        if (loading == true) {
+            loader.style.display = "block";
+            console.log(loader.style.display);
+        } else {
+            loader.style.display = "none";
+            console.log(loader.style.display);
+        }
+    }
     searchKeyword.addEventListener("keydown", (event) => {
         if (event.key == "Enter") {
             event.preventDefault();
@@ -25,6 +37,7 @@
             emptyFavText.style.display = "none";
         }
     }
+
 
     // Event listner on search
     searchKeyword.addEventListener("keyup", function () {
@@ -48,16 +61,20 @@
 
     // Fetches data from api and calls function to add it in
     async function fetchMovies(search) {
-
         const url = `https://www.omdbapi.com/?t=${search}&apikey=4edc9c6a`;
         try {
+            console.log('fetch');
+            showLoading(true); // start showing the loader
             const response = await fetch(url);
             const data = await response.json();
+            showLoading(false); // stop showing the loader
             return data;
         } catch (err) {
             console.log(err);
         }
     }
+
+
 
     // Shows in suggestion container DOM
     function addToSuggestionContainerDOM(data) {
@@ -73,7 +90,7 @@
 
         if (!isPresent && data.Title != undefined) {
             if (data.Poster == "N/A") {
-                data.Poster = "./images/not-found.png";
+                data.Poster = "./not_found";
             }
             suggestionList.push(data);
             const movieCard = document.createElement("div");
@@ -113,7 +130,6 @@
     // Add to favourite of localStorage
     async function handleFavBtn(e) {
         const target = e.target;
-
         let data = await fetchMovies(target.dataset.id);
 
         let favMoviesLocal = localStorage.getItem("favMoviesList");

@@ -80,6 +80,25 @@ input {
 
 /* MAIN SECTION */
 
+#loader-main,
+#loader-fav {
+  display: none;
+  vertical-align: middle;
+  margin: auto;
+  position: relative;
+  height: 10rem;
+  z-index: 4;
+}
+#loader-main img {
+  height: 5rem;
+  margin: 10px;
+  width: 5rem;
+}
+#loader-fav img {
+  height: 5rem;
+  margin: 10px;
+  width: 5rem;
+}
 #main-section {
   min-height: 89vh;
   width: 65%;
@@ -263,6 +282,7 @@ a {
   }
 
   #favorites-section {
+    display: block;
     width: 40vw;
     height: 100vh;
   }
