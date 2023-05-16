@@ -65,7 +65,7 @@ input {
   height: 2.9rem;
   width: 4.5rem;
   border: transparent;
-  background-color: var(--logo-color);
+  background-color: rgb(5 4 0 / 0%);
 }
 
 .search-icon {
@@ -77,6 +77,28 @@ input {
   display: none;
   font-size: 1.7rem;
 }
+/* notification */
+#notification-container {
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.notification {
+  position: relative;
+  padding: 10px;
+  background-color: green;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: none;
+  color: black;
+}
+
+.notification.show {
+  display: block;
+}
 
 /* MAIN SECTION */
 
@@ -85,7 +107,9 @@ input {
   display: none;
   vertical-align: middle;
   margin: auto;
-  position: relative;
+  left: 40%;
+  top: 40%;
+  position: fixed;
   height: 10rem;
   z-index: 4;
 }
@@ -100,7 +124,7 @@ input {
   width: 5rem;
 }
 #main-section {
-  min-height: 89vh;
+  min-height: 75vh;
   width: 65%;
 }
 
@@ -115,7 +139,6 @@ h2 {
   justify-content: center;
   padding: 2rem;
 }
-
 /* card  */
 
 a {

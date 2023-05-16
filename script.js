@@ -7,6 +7,7 @@
     const showFavourites = document.getElementById("favorites-section");
     const emptyFavText = document.getElementById("empty-fav-text");
     const loader = document.getElementById("loader-main");
+    const notificationContainer = document.getElementById('notification-container');
 
     addToFavDOM();
     showEmptyText();
@@ -15,13 +16,14 @@
 
     //showing loader when the data is being fetched
     function showLoading(loading) {
-        console.log(loading);
+
         if (loading == true) {
             loader.style.display = "block";
-            console.log(loader.style.display);
+            suggestionsContainer.style.opacity = 0.4;
+
         } else {
             loader.style.display = "none";
-            console.log(loader.style.display);
+            suggestionsContainer.style.opacity = 1;
         }
     }
     searchKeyword.addEventListener("keydown", (event) => {
@@ -42,7 +44,6 @@
     // Event listner on search
     searchKeyword.addEventListener("keyup", function () {
         let search = searchKeyword.value;
-        console.log(search);
         if (search === "") {
             emptyText.style.display = "block";
             suggestionsContainer.innerHTML = "";
@@ -63,7 +64,6 @@
     async function fetchMovies(search) {
         const url = `https://www.omdbapi.com/?t=${search}&apikey=4edc9c6a`;
         try {
-            console.log('fetch');
             showLoading(true); // start showing the loader
             const response = await fetch(url);
             const data = await response.json();
@@ -145,7 +145,7 @@
         let isPresent = false;
         favMovieArray.forEach((movie) => {
             if (data.Title == movie.Title) {
-                notify("already added to fav list");
+                notify("Already added to fav list");
                 isPresent = true;
             }
 
@@ -153,6 +153,7 @@
 
         if (!isPresent) {
             favMovieArray.push(data);
+            notify("Added to fav list");
         }
 
         localStorage.setItem("favMoviesList", JSON.stringify(favMovieArray));
@@ -200,9 +201,34 @@
     }
 
     // To notify
-    function notify(text) {
 
+    // To notify
+    // To notify
+    function notify(message) {
+        const notification = document.createElement('div');
+        notification.className = "notification";
+        notification.classList.add('animate__animated', 'animate__backInRight');
+        notification.textContent = message;
+
+        notificationContainer.appendChild(notification);
+
+        // Make sure the notification is initially hidden
+        notification.style.display = "none";
+
+        // Show the notification
+        notification.style.display = "block";
+
+        setTimeout(() => {
+            // Hide the notification after 5 seconds
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 3000);
+            notification.classList.remove('animate__backInRight');
+            notification.classList.add('animate__backOutLeft')
+        }, 3005);
     }
+
+
 
     // Delete from favourite list
     function deleteMovie(name) {
@@ -212,7 +238,7 @@
         });
 
         localStorage.setItem("favMoviesList", JSON.stringify(updatedList));
-
+        notify("Deleted from fav list");
         addToFavDOM();
         showEmptyText();
     }
